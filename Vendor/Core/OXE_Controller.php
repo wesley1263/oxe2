@@ -45,15 +45,17 @@ namespace Vendor\Core;
 	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
 	 * */
 	public function view($name,$vars = null){
+		
+		if(is_array($vars) && count($vars) > 0){
+			extract($vars);
+		}else{
+			self::error("Erro 04 - Variable Empty!");
+		}
+			
 		$file_view = VIEW_PATH.$name.'.phtml';
 		if(file_exists($file_view)){
 			require($file_view);
 			
-			if(is_array($vars) && count($vars) > 0){
-				extract($vars);
-			}else{
-				self::error("Erro 04 - Variable Empty!");
-			}
 		}else{
 			self::error("Erro 03 - File $file_view Not Found!");
 		}
@@ -88,6 +90,53 @@ namespace Vendor\Core;
 			self::error("Erro in the Controller: redirector need param!");
 		}else{
 			return header('Location: '.$url);
+		}
+	}
+	
+	
+	/**
+	 * library - Method to load library in dir vendor/library/
+	 * @access public
+	 * @param  $library - Library name e name file 
+	 * @return void
+	 * @author Weslei A. Souza
+	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
+	 * */
+	public function library($library)
+	{
+		$b = DIRECTORY_SEPARATOR;
+		
+		if(is_array($library)){
+			foreach($library as $key => $value){
+				$file = LIBRARY_PATH.$value.$b.$value.'.php';
+				if(file_exists($file)){
+					require($file);
+					
+					if(class_exists($value)){
+						$this->$value = new $value();
+					}else{
+						self::error("Erro in ".__CLASS__." library $value not found!");
+					}
+					
+				}else{
+					self::error("Erro int the library: $value not found!");
+				}
+			}
+		}else{
+			$file = LIBRARY_PATH.$library.$b.$library.'.php';
+			
+			if(file_exists($file)){
+				require($file);
+				
+				if(class_exists($library)){
+					$this->$library = new $library();
+				}else{
+					self::error("Erro in ".__CLASS__." library $library not found!");
+				}
+			}else{
+				self::error("Erro int the library: $library not found!");
+				
+			}
 		}
 	}
 	

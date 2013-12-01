@@ -13,6 +13,10 @@ class Teste extends OXE_Model {
 	}
 	
 	public function lista_all(){
-		return $this->fetchAll();
+		$this->select()
+			 ->from('teste','tes')
+			 ->where('id_teste = 1')
+			 ->where('nome_teste = joao')
+			 ->result();
 	}
 }

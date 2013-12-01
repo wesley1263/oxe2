@@ -15,6 +15,7 @@ abstract class OXE_Database extends PDO {
 	protected $_name;
 	protected $_primary;
 	private $db;
+	private $query;
 	
 	
 	/**
@@ -30,6 +31,14 @@ abstract class OXE_Database extends PDO {
 			$this->exec("set names $charset");
 		}
 		$this->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+		
+		if(method_exists(__CLASS__, 'where')){
+			$this->query .= 'WHERE TRUE ';
+		}
+	}
+	
+	public function __call($method,$arg){
+		exit("Erro in the Model: Method <strong>'$method'</strong> not exist!");
 	}
 	
 	
@@ -119,17 +128,47 @@ abstract class OXE_Database extends PDO {
 	}
 	
 	
-	public function select($table,$cond = null){
-		try{
-			$cond = ($cond == null ? null : "WHERE ".$cond);
-			$db = $this->prepare("SELECT * FROM $table $cond");
-			$db->execute();
-			return $db->fetchAll(PDO::FETCH_ASSOC);
-		}catch(PDOException $e){
-			exit($e->getMessage());
+	public function select($rows = '*'){
+		
+		if(is_array($rows) && count($rows) > 0){
+			$rows = implode(',', $rows);
 		}
+		$sql = "SELECT $rows ";
+		$this->query = $sql;
+		return $this;
 	}
 	
+	
+	public function from($table,$alias = null){
+		
+		if($alias != null){
+			$alias = "AS $alias";
+		}
+		$sql = "FROM $table $alias WHERE TRUE ";
+		$this->query .= $sql;
+		return $this;
+	}
+	
+	public function where($cond){
+		$sql = "AND $cond ";
+		$this->query .= $sql;
+		return $this;
+	}
+	
+	public function limit($limit){
+		$sql = "LIMIT $limit";
+		$this->query .= $sql;
+		return $this;
+	}
+	
+	
+	public function join(){
+		
+	}
+	
+	public function result(){
+		echo $this->query;
+	}
 	
 	public function query($query){
 		try{
