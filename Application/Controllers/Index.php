@@ -8,13 +8,22 @@ class Index extends OXE_Controller {
 
 	}
 
-	public function main() {
+	public function main() 
+	{
 		$teste = new Teste();
 		$teste->lista_all();
 		$data['title'] = 'Pagina inicial';
-		echo phpversion();
+		// echo phpversion();
 		
 		$this->view('index/index',$data);
+	}
+	
+	public function boleto()
+	{
+		
+		
+		
+		
 	}
 
 

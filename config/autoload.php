@@ -20,26 +20,3 @@ spl_autoload_register(function ($class)
 	}
 );
 
-spl_autoload_register(function ($class)
-	{
-		$file = str_replace(array('\\'),DIRECTORY_SEPARATOR,$class).'.php';
-		$path = CONTROLLER_PATH.$file;
-		if(file_exists($path)){
-			require_once($path);
-		}else{
-			exit("Erro 00: $path Not Found!");
-		}
-	}
-);
-
-spl_autoload_register(function ($class)
-	{
-		$file = str_replace(array('\\'),DIRECTORY_SEPARATOR,$class).'.php';
-		$path = MODEL_PATH.$file;
-		if(file_exists($path)){
-			require_once($path);
-		}else{
-			exit("Erro Model: $path Not Found!");
-		}
-	}
-);
