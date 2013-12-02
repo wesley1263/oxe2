@@ -14,9 +14,12 @@ class Teste extends OXE_Model {
 	
 	public function lista_all(){
 		$this->select()
-			 ->from('teste','tes')
-			 ->where('id_teste = 1')
-			 ->where('nome_teste = joao')
+			 ->from('tbl_usuario','user')
+			 ->where('user.id_user = 4')
+			 ->where('user.nome_user = \'JOSE\'')
+			 ->where_or('user.id > 10')
+			 ->join(array('teste' => 'tes'),'user.id = tes.id')
+			 ->limit('100')
 			 ->result();
 	}
 }

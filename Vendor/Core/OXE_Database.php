@@ -25,7 +25,8 @@ abstract class OXE_Database extends PDO {
 	 * @link contato@andwes.com.br
 	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
 	 * */
-	public function __construct($driver,$host,$dbname,$user,$pass,$charset = null){
+	public function __construct($driver,$host,$dbname,$user,$pass,$charset = null)
+	{
 		parent::__construct($driver.':host='.$host.';dbname='.$dbname,$user,$pass);
 		if($charset != null){
 			$this->exec("set names $charset");
@@ -37,7 +38,8 @@ abstract class OXE_Database extends PDO {
 		}
 	}
 	
-	public function __call($method,$arg){
+	public function __call($method,$arg)
+	{
 		exit("Erro in the Model: Method <strong>'$method'</strong> not exist!");
 	}
 	
@@ -50,7 +52,8 @@ abstract class OXE_Database extends PDO {
 	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
 	 * @return Array
 	 * */
-	public function fetchAll(){
+	public function fetchAll()
+	{
 		try{
 		$db = $this->prepare("SELECT * FROM $this->_name");
 		$db->execute();
@@ -71,7 +74,8 @@ abstract class OXE_Database extends PDO {
 	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
 	 * @return Array
 	 * */
-	public function fetch($cond){
+	public function fetch($cond)
+	{
 		try{
 			$db = $this->prepare("SELECT * FROM {$this->_name} WHERE $cond");
 			$db->execute();
@@ -83,7 +87,8 @@ abstract class OXE_Database extends PDO {
 	
 	
 	
-	public function insert(array $data){
+	public function insert(array $data)
+	{
 		try{
 			$campos = implode(',', array_keys($data));
 			$values = ':'.implode(',:', array_keys($data));
@@ -100,7 +105,8 @@ abstract class OXE_Database extends PDO {
 	
 	
 	
-	public function update($data, $cond){
+	public function update($data, $cond)
+	{
 		try{
 			foreach($data as $keys => $values){
 				$new_data[] = "$keys = :$keys";
@@ -119,7 +125,8 @@ abstract class OXE_Database extends PDO {
 	}
 	
 	
-	public function delete($id){
+	public function delete($id)
+	{
 		try{
 			return $db->exec("DELETE FROM $this->_name WHERE $this->_primary = $id");
 		}catch(PDOException $e){
@@ -130,7 +137,8 @@ abstract class OXE_Database extends PDO {
 	
 	public function select($rows = '*'){
 		
-		if(is_array($rows) && count($rows) > 0){
+		if(is_array($rows) && count($rows) > 0)
+		{
 			$rows = implode(',', $rows);
 		}
 		$sql = "SELECT $rows ";
@@ -139,7 +147,8 @@ abstract class OXE_Database extends PDO {
 	}
 	
 	
-	public function from($table,$alias = null){
+	public function from($table,$alias = null)
+	{
 		
 		if($alias != null){
 			$alias = "AS $alias";
@@ -149,22 +158,41 @@ abstract class OXE_Database extends PDO {
 		return $this;
 	}
 	
-	public function where($cond){
-		$sql = "AND $cond ";
+	public function where($cond)
+	{
+		$sql = "AND ($cond) ";
 		$this->query .= $sql;
 		return $this;
 	}
 	
-	public function limit($limit){
-		$sql = "LIMIT $limit";
+	public function limit($limit)
+	{
+		$sql = "LIMIT $limit ";
 		$this->query .= $sql;
 		return $this;
 	}
 	
 	
-	public function join(){
-		
+	public function join(array $table,$on,$type = 'INNER')
+	{
+		$tableName = null;
+		$alias = null;
+		foreach($table as $key => $value){
+			$tableName = $key;
+			$alias = $value;
+		}
+		$sql = "$type JOIN $tableName AS $alias ON ($on) ";
+		$this->query .= $sql;
+		return $this;
 	}
+	
+	public function where_or($cond)
+	{
+		$sql = "OR ($cond) ";
+		$this->query .= $sql;
+		return $this;	
+	}
+	
 	
 	public function result(){
 		echo $this->query;

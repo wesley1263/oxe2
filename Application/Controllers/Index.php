@@ -12,6 +12,7 @@ class Index extends OXE_Controller {
 		$teste = new Teste();
 		$teste->lista_all();
 		$data['title'] = 'Pagina inicial';
+		echo phpversion();
 		
 		$this->view('index/index',$data);
 	}
