@@ -199,8 +199,16 @@ abstract class OXE_Database extends PDO {
 	}
 	
 	
-	public function result(){
-		echo $this->query;
+	public function result()
+	{
+		try{
+		$db = $this->prepare($this->query);
+		$db->execute();
+		return $db->fetchAll(PDO::FETCH_ASSOC);	
+		}catch(PDOException $e){
+			echo $e->getMessage();
+		}	
+				
 	}
 	
 	public function query($query){
