@@ -146,6 +146,11 @@ abstract class OXE_Database extends PDO {
 		return $this;
 	}
 	
+	public function distict(){
+		$this->query .= 'DISTINCT ';
+		return $this;
+	}
+	
 	
 	public function from($table,$alias = null)
 	{
