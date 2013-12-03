@@ -48,8 +48,6 @@ namespace Vendor\Core;
 		
 		if(is_array($vars) && count($vars) > 0){
 			extract($vars);
-		}else{
-			self::error("Erro 04 - Variable Empty!");
 		}
 			
 		$file_view = VIEW_PATH.$name.'.phtml';
