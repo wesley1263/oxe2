@@ -14,7 +14,7 @@ use Vendor\Core\OXE_Model;
 class Pagination extends OXE_Model {
 	
 	private $_table;
-	private $_limit;
+	private $_limit = 5;
 	private $_param;
 	private $_init;
 	private $_totalRegister;

@@ -23,6 +23,7 @@ abstract class OXE_Database extends PDO {
 	private $_limit;
 	private $_or;
 	private $_join;
+	private $_order;
 	
 	
 	/**
@@ -207,10 +208,22 @@ abstract class OXE_Database extends PDO {
 	}
 	
 	
+	public function order_by($data, $asc = 'ASC')
+	{
+		if(is_array($data)){
+			$data = implode(',',$data);
+		}
+		$sql = "ORDER BY $data $asc";
+		
+		$this->_order = $sql;
+		return $this;
+	}	
+	
+	
 	public function result()
 	{
 		
-		$this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or $this->_limit";
+		$this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or  $this->_order $this->_limit";
 		try{
 		$db = $this->prepare($this->query);
 		$db->execute();

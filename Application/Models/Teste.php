@@ -23,6 +23,7 @@ class Teste extends OXE_Model {
 		$this->select('post_title')
 		     ->distinct()
 			 ->from('pv_posts_w')
+			 ->order_by('post_title')
 			 ->limit($inicio,$limit);
 			 return $this->result();
 	}
