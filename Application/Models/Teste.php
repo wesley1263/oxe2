@@ -12,16 +12,19 @@ class Teste extends OXE_Model {
 		parent::__construct();
 	}
 	
-	public function lista_all(){
-		// $this->select()
-			 // ->from('tbl_usuario','user')
-			 // ->where('user.id_user = 4')
-			 // ->where('user.nome_user = \'JOSE\'')
-			 // ->where_or('user.id > 10')
-			 // ->join(array('teste' => 'tes'),'user.id = tes.id')
-			 // ->limit('100')
-			 // ->result();
-			 return array('content','Olá mundo');
+	public function lista_count(){
+		$this->select('post_title')
+		     ->distinct()
+			 ->from('pv_posts_w');
+			 return $this->result();
+	}
+	
+	public function list_all($inicio, $limit){
+		$this->select('post_title')
+		     ->distinct()
+			 ->from('pv_posts_w')
+			 ->limit($inicio,$limit);
+			 return $this->result();
 	}
 	
 }

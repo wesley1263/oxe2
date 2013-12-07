@@ -1,7 +1,7 @@
 <?php
 
 $dbconfig = array(
-'DBNAME' => 'usecase',
+'DBNAME' => 'idealinvest_wp_development',
 'DRIVER'=> 'mysql',
 'HOST'=> 'localhost',
 'USERNAME'=> 'root',

@@ -16,6 +16,13 @@ abstract class OXE_Database extends PDO {
 	protected $_primary;
 	private $db;
 	private $query;
+	private $_select = '*';
+	private $_distinct;
+	private $_from;
+	private $_where;
+	private $_limit;
+	private $_or;
+	private $_join;
 	
 	
 	/**
@@ -141,13 +148,13 @@ abstract class OXE_Database extends PDO {
 		{
 			$rows = implode(',', $rows);
 		}
-		$sql = "SELECT $rows ";
-		$this->query = $sql;
+		$sql = "$rows";
+		$this->_select = $sql;
 		return $this;
 	}
 	
-	public function distict(){
-		$this->query .= 'DISTINCT ';
+	public function distinct(){
+		$this->_distinct = 'DISTINCT';
 		return $this;
 	}
 	
@@ -159,21 +166,22 @@ abstract class OXE_Database extends PDO {
 			$alias = "AS $alias";
 		}
 		$sql = "FROM $table $alias WHERE TRUE ";
-		$this->query .= $sql;
+		$this->_from = $sql;
 		return $this;
 	}
 	
 	public function where($cond)
 	{
 		$sql = "AND ($cond) ";
-		$this->query .= $sql;
+		$this->_where = $sql;
 		return $this;
 	}
 	
-	public function limit($limit)
+	public function limit($init,$limit = null)
 	{
-		$sql = "LIMIT $limit ";
-		$this->query .= $sql;
+		$limit = (is_null($limit)) ? null : ", $limit";
+		$sql = "LIMIT $init $limit";
+		$this->_limit = $sql;
 		return $this;
 	}
 	
@@ -187,20 +195,22 @@ abstract class OXE_Database extends PDO {
 			$alias = $value;
 		}
 		$sql = "$type JOIN $tableName AS $alias ON ($on) ";
-		$this->query .= $sql;
+		$this->_join = $sql;
 		return $this;
 	}
 	
 	public function where_or($cond)
 	{
 		$sql = "OR ($cond) ";
-		$this->query .= $sql;
+		$this->_or = $sql;
 		return $this;	
 	}
 	
 	
 	public function result()
 	{
+		
+		$this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or $this->_limit";
 		try{
 		$db = $this->prepare($this->query);
 		$db->execute();
