@@ -137,18 +137,28 @@ class Pagination {
 				$url = '/'.$uri[0].'/'.$uri[1].'/'.$param.'/'.$i;
 				echo "<a href=\"$url\">$i</a> $separator";
 			}
+			
 		}
 	}
 	
-	public function next()
+	public function next($icon = ">")
 	{
+		$uri = explode('/',$_SERVER['REQUEST_URI']);
+		$pag = array_pop($uri);
+		$next = (int)$pag + 1;
+		$url = implode($uri,'/');
+		return "<a href=\"$url/$next\">$icon</a>";
 		
 	}
 	
 	
-	public function previous()
+	public function previous($icon = "<")
 	{
-		
+		$uri = explode('/',$_SERVER['REQUEST_URI']);
+		$pag = array_pop($uri);
+		$next = (int)$pag - 1;
+		$url = implode($uri,'/');
+		return "<a href=\"$url/$next\">$icon</a>";
 	}
 	
 	

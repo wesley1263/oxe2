@@ -28,20 +28,13 @@ class Index extends OXE_Controller {
 		$inicio = $this->pagination->init();
 		$limite = 15;
 		$this->pagination->setLimit($limite);
-		$this->pagination->setParam('pagina');
+		$this->pagination->setParam('teste');
 		$this->pagination->setTotalRegister($data);
 		
 		
-		$lista = $teste->list_all($inicio, $limite);
-		foreach($lista as $key => $value){
-			foreach($value as $key => $va){
-				echo $va.'<br>';
-			}
-		}
+		$data['listas'] = $teste->list_all($inicio, $limite);
 		
-		echo $this->pagination->first();
-		$this->pagination->pagination();
-		echo $this->pagination->last();
+		$this->view('index/pagination',$data);
 	}
 
 

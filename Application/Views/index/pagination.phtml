@@ -1,0 +1,13 @@
+<?php
+
+foreach($listas as $key => $values){
+	foreach($values as $k => $v){
+		echo $v.'<br>';
+	}
+}
+
+echo $this->pagination->first().'  ';
+echo $this->pagination->previous();
+$this->pagination->pagination();
+echo $this->pagination->next().'  ';
+echo $this->pagination->last();
