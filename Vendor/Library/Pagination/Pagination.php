@@ -1,6 +1,5 @@
 <?php
 namespace Vendor\Library\Pagination;
-use Vendor\Core\OXE_Model;
 
 /**
  * Pagination - Class to create pagination of database
@@ -11,21 +10,15 @@ use Vendor\Core\OXE_Model;
  * @link http://www.andwes.com.br
  * */
 
-class Pagination extends OXE_Model {
+class Pagination {
 	
 	private $_table;
-	private $_limit = 5;
+	private $_limit = 15;
 	private $_param;
 	private $_init;
 	private $_totalRegister;
 	
 	
-	
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
 	
 	
 /**
@@ -39,9 +32,11 @@ class Pagination extends OXE_Model {
  * */
 	public function setLimit($limit)
 	{
-		$this->_limit = $limit;
-		// echo  $this->_limit.'<br>';
+		$this->_limit = (int)$limit;
+		return $this;
 	}
+
+	
 	
 	
 /**
@@ -66,6 +61,8 @@ class Pagination extends OXE_Model {
 		return $this;
 	}
 	
+	
+	
 	private function totalPage()
 	{
 		$totalPage = ceil($this->_totalRegister / $this->_limit);
@@ -75,11 +72,12 @@ class Pagination extends OXE_Model {
 	
 	public function init()
 	{
+		$limit =& $this->_limit;
 		$url = explode('/',$_GET['url']);
 		array_shift($url);
 		array_shift($url);
 		array_shift($url);
-		$init = ($url[0] * $this->_limit) - $this->_limit;
+		$init = ($url[0] * $limit) - $limit;
 		return $this->_init = $init;
 	}
 	
@@ -91,6 +89,17 @@ class Pagination extends OXE_Model {
 		array_pop($uri); 
 		return $uri;
 	}
+	
+	private function getUri()
+	{
+		$uri = explode('/',$_SERVER['REQUEST_URI']);
+		array_shift($uri);
+		array_shift($uri);
+		array_shift($uri);
+		return $uri;
+	}
+	
+	
 	
 	public function first($link = '<<')
 	{
@@ -113,19 +122,20 @@ class Pagination extends OXE_Model {
 	
 	public function pagination($separator = ' | ')
 	{
-		$pagina = $this->getParam($this->_param);
-		if(!isset($pagina)){
+		$pagina = $this->getUri();
+		// print_r($pagina);
+		if(!$pagina){
 			$pagina = 1;
 		}
 		
 		for($i = 1;$i<=$this->totalPage();$i++){
-			if($i == $pagina){
-				echo "<strong>$i</strong>";
+			if($i == $pagina[1]){
+				echo "<strong>$i $separator</strong>";
 			}else{
 				$uri = $this->getParam();
 				$param = $this->_param;
 				$url = '/'.$uri[0].'/'.$uri[1].'/'.$param.'/'.$i;
-				echo "<a href=\"$url\">$i $separator</a>";
+				echo "<a href=\"$url\">$i</a> $separator";
 			}
 		}
 	}

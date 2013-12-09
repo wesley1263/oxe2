@@ -33,13 +33,11 @@ class Index extends OXE_Controller {
 		
 		
 		$lista = $teste->list_all($inicio, $limite);
-		echo '<pre>';
 		foreach($lista as $key => $value){
 			foreach($value as $key => $va){
 				echo $va.'<br>';
 			}
 		}
-		echo '</pre>';
 		
 		echo $this->pagination->first();
 		$this->pagination->pagination();
