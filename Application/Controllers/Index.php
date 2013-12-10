@@ -37,6 +37,10 @@ class Index extends OXE_Controller {
 		$this->view('index/pagination',$data);
 	}
 
-
+	public function teste()
+	{
+		$teste = new Teste();
+		$teste->teste();
+	}
 
 }

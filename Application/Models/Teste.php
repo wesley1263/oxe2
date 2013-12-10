@@ -19,13 +19,24 @@ class Teste extends OXE_Model {
 			 return $this->result();
 	}
 	
-	public function list_all($inicio, $limit){
+	public function list_all($inicio, $limit)
+	{
 		$this->select('post_title')
 		     ->distinct()
 			 ->from('pv_posts_w')
 			 ->order_by('post_title')
 			 ->limit($inicio,$limit);
 			 return $this->result();
+	}
+	
+	public function teste()
+	{
+		$this->select('post_title')
+		     ->distinct()
+			 ->from('pv_posts_w')
+			 ->order_by('post_title')
+			 ->limit(0,30);
+			 return $this->console();
 	}
 	
 }

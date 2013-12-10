@@ -19,7 +19,7 @@ abstract class OXE_Database extends PDO {
 	private $_select = '*';
 	private $_distinct;
 	private $_from;
-	private $_where;
+	private $_where = array();
 	private $_limit;
 	private $_or;
 	private $_join;
@@ -173,8 +173,8 @@ abstract class OXE_Database extends PDO {
 	
 	public function where($cond)
 	{
-		$sql = "AND ($cond) ";
-		$this->_where = $sql;
+		
+		$this->_where[] = "AND ($cond)";
 		return $this;
 	}
 	
@@ -222,6 +222,11 @@ abstract class OXE_Database extends PDO {
 	
 	public function result()
 	{
+		if(is_array($this->_where) && count($this->_where)){
+			$this->_where = implode($this->_where, '  ');
+		}else{
+			$this->_where = null;
+		}
 		
 		$this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or  $this->_order $this->_limit";
 		try{
@@ -232,6 +237,17 @@ abstract class OXE_Database extends PDO {
 			echo $e->getMessage();
 		}	
 				
+	}
+	
+	public function console()
+	{
+		if(is_array($this->_where) && count($this->_where)){
+			$this->_where = implode($this->_where, '  ');
+		}else{
+			$this->_where = null;
+		}
+		
+		echo $this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or  $this->_order $this->_limit";
 	}
 	
 	public function query($query){
