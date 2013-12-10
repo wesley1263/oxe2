@@ -162,7 +162,6 @@ abstract class OXE_Database extends PDO {
 	
 	public function from($table,$alias = null)
 	{
-		
 		if($alias != null){
 			$alias = "AS $alias";
 		}
@@ -173,7 +172,6 @@ abstract class OXE_Database extends PDO {
 	
 	public function where($cond)
 	{
-		
 		$this->_where[] = "AND ($cond)";
 		return $this;
 	}
@@ -214,7 +212,6 @@ abstract class OXE_Database extends PDO {
 			$data = implode(',',$data);
 		}
 		$sql = "ORDER BY $data $asc";
-		
 		$this->_order = $sql;
 		return $this;
 	}	
@@ -227,8 +224,7 @@ abstract class OXE_Database extends PDO {
 		}else{
 			$this->_where = null;
 		}
-		
-		$this->query = "SELECT $this->_distinct $this->_select $this->_from $this->_join $this->_where $this->_or  $this->_order $this->_limit";
+		$this->query = "SELECT $this->_distinct $this->_select $this->_from  $this->_join  $this->_where $this->_or  $this->_order $this->_limit";
 		try{
 		$db = $this->prepare($this->query);
 		$db->execute();

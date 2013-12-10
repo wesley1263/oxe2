@@ -28,9 +28,8 @@ class Index extends OXE_Controller {
 		$inicio = $this->pagination->init();
 		$limite = 15;
 		$this->pagination->setLimit($limite);
-		$this->pagination->setParam('teste');
+		$this->pagination->setParam('pagina');
 		$this->pagination->setTotalRegister($data);
-		
 		
 		$data['listas'] = $teste->list_all($inicio, $limite);
 		
@@ -40,7 +39,7 @@ class Index extends OXE_Controller {
 	public function teste()
 	{
 		$teste = new Teste();
-		$teste->teste();
+		// $teste->teste();
 	}
 
 }
