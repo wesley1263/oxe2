@@ -38,7 +38,10 @@ class Pagination {
 	}
 
 	
-	
+	public function __call($method,$args)
+	{
+		return exit("Error from ".__CLASS__." Library: This <strong>'$method'</strong> method do not exist!");
+	}
 	
 /**
  * setParam - Method to set param of get
