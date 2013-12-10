@@ -170,7 +170,7 @@ class Pagination {
 		$next = (int)$pag - 1;
 		$url = implode($uri,'/');
 		$return = "<a href=\"$url/$next\">$icon</a>";
-		if($this->_totalPage <= $next){
+		if($next < 1){
 			$return = " <a href=\"#\">$icon</a> ";
 		}
 		return $return;
