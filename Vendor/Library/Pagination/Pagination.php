@@ -17,6 +17,7 @@ class Pagination {
 	private $_param;
 	private $_init;
 	private $_totalRegister;
+	private $_totalPage;
 	
 	
 	
@@ -66,6 +67,7 @@ class Pagination {
 	private function totalPage()
 	{
 		$totalPage = ceil($this->_totalRegister / $this->_limit);
+		$this->_totalPage = $totalPage;
 		return $totalPage;
 	}
 	
@@ -145,9 +147,15 @@ class Pagination {
 	{
 		$uri = explode('/',$_SERVER['REQUEST_URI']);
 		$pag = array_pop($uri);
+		
 		$next = (int)$pag + 1;
 		$url = implode($uri,'/');
-		return "<a href=\"$url/$next\">$icon</a>";
+		$return = " <a href=\"$url/$next\">$icon</a> ";
+		if($this->_totalPage < $next){
+			$return = " <a href=\"#\">$icon</a> ";
+		}
+		
+		return $return;
 		
 	}
 	
@@ -158,7 +166,11 @@ class Pagination {
 		$pag = array_pop($uri);
 		$next = (int)$pag - 1;
 		$url = implode($uri,'/');
-		return "<a href=\"$url/$next\">$icon</a>";
+		$return = "<a href=\"$url/$next\">$icon</a>";
+		if($this->_totalPage <= $next){
+			$return = " <a href=\"#\">$icon</a> ";
+		}
+		return $return;
 	}
 	
 	
