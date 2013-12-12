@@ -6,8 +6,8 @@ foreach($listas as $key => $values){
 	}
 }
 
-echo $this->pagination->first().'  ';
-echo $this->pagination->previous();
-$this->pagination->pagination();
-echo $this->pagination->next().'  ';
-echo $this->pagination->last();
+echo $pag->first().'  ';
+echo $pag->previous();
+$pag->pagination();
+echo $pag->next().'  ';
+echo $pag->last();

@@ -31,10 +31,10 @@ class Pagination {
  * @author Weslei A. Souza
  * @copyright	Copyright (c) 2013, ANDWES Solutions.
  * */
-	public function setLimit($limit)
+	public function setLimit($limit = null)
 	{
-		$this->_limit = (int)$limit;
-		return $this;
+		$this->_limit = $limit;
+		return $this->_limit;
 	}
 
 	
@@ -58,7 +58,7 @@ class Pagination {
 		return $this;
 	}
 	
-	
+		
 	public function setTotalRegister($data)
 	{
 		$this->_totalRegister = count($data);
@@ -77,7 +77,7 @@ class Pagination {
 	
 	public function init()
 	{
-		$limit =& $this->_limit;
+		$limit = $this->_limit;
 		$url = explode('/',$_GET['url']);
 		array_shift($url);
 		array_shift($url);

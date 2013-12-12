@@ -175,5 +175,18 @@ namespace Vendor\Core;
 		array_shift($param);
 		return array($param[0] => $param[1]);
 	 }
+	 
+	 
+	 /**
+	 * dump - Method to debuging args
+	 * @access public
+	 * @return String
+	 * @author Weslei A. Souza
+	 * @copyright	Copyright (c) 2013, ANDWES Solutions.
+	 * */
+	 public function dump($array)
+	 {
+	 	echo '<pre>'.print_r($array,1).'</pre>';
+	 }
  }
  

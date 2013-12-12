@@ -12,10 +12,11 @@ define('OXE_PATH',dirname(dirname(__FILE__)).B);
 
 
 ########## VENDOR PATH ############
-define('VENDOR_PATH',OXE_PATH.B.'Vendor'.B);
+define('VENDOR_PATH',OXE_PATH.'Vendor'.B);
 define('CORE_PATH',VENDOR_PATH.B.'Core'.B);
 define('HELPERS_PATH',VENDOR_PATH.B.'Helpers'.B);
 define('LIBRARY_PATH',VENDOR_PATH.B.'Library'.B);
+define('LANGUAGE_PATH',VENDOR_PATH.'Language'.B);
 
 ############ CONFIG PATH ############
 define('CONFIG_PATH',OXE_PATH.B.'config'.B);

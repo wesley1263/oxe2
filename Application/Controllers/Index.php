@@ -2,13 +2,13 @@
 use Vendor\Core\OXE_Controller;
 use Application\Models\Teste;
 use Vendor\Library\Pagination\Pagination;
-
+use Vendor\Library\Language\Language;
 
 class Index extends OXE_Controller {
 
 	public function init() {
 		ini_set('default_charset','utf8');
-		$this->pagination = new Pagination();
+		
 	}
 
 	public function main() 
@@ -22,24 +22,27 @@ class Index extends OXE_Controller {
 	
 	public function boleto()
 	{
+		$pag = new Pagination();
 		$teste = new Teste();
 		$data = $teste->lista_count();
 		
-		$inicio = $this->pagination->init();
+		$inicio = $pag->init();
 		$limite = 15;
-		$this->pagination->setLimit($limite);
-		$this->pagination->setParam('pagina');
-		$this->pagination->setTotalRegister($data);
+		$pag->setLimit($limite);
+		$pag->setParam('pagina');
+		$pag->setTotalRegister($data);
 		
 		$data['listas'] = $teste->list_all($inicio, $limite);
-		
+		$data['pag'] = $pag;
 		$this->view('index/pagination',$data);
 	}
 
 	public function teste()
 	{
-		$teste = new Teste();
-		// $teste->teste();
+		$langua = new Language();
+		$langua->loadLanguage('pt');
+		echo $langua->translator('title');
+		// $this->dump($teste);
 	}
 
 }
