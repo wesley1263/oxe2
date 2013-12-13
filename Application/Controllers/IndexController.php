@@ -4,7 +4,9 @@ use Application\Models\Teste;
 use Vendor\Library\Pagination\Pagination;
 use Vendor\Library\Language\Language;
 use Vendor\Library\Cache\Cache;
-class Index extends OXE_Controller {
+
+
+class IndexController extends OXE_Controller {
 
 	public function init() {
 		ini_set('default_charset','utf8');
