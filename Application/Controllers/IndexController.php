@@ -3,7 +3,7 @@ use Vendor\Core\OXE_Controller;
 use Application\Models\Teste;
 use Vendor\Library\Pagination\Pagination;
 use Vendor\Library\Language\Language;
-
+use Vendor\Library\Cache\Cache;
 class Index extends OXE_Controller {
 
 	public function init() {
@@ -11,7 +11,7 @@ class Index extends OXE_Controller {
 		
 	}
 
-	public function main() 
+	public function indexAction() 
 	{
 		$teste = new Teste();
 		$data['title'] = 'Pagina inicial';
@@ -20,7 +20,7 @@ class Index extends OXE_Controller {
 		$this->view('index/index',$data);
 	}
 	
-	public function boleto()
+	public function boletoAction()
 	{
 		$pag = new Pagination();
 		$teste = new Teste();
@@ -37,12 +37,45 @@ class Index extends OXE_Controller {
 		$this->view('index/pagination',$data);
 	}
 
-	public function teste()
+	public function testeAction()
 	{
 		$langua = new Language();
-		$langua->loadLanguage('pt');
+		$langua->loadLanguage('en');
 		echo $langua->translator('title');
 		// $this->dump($teste);
+	}
+	
+	public function correiosAction()
+	{
+		$data = array(
+		'nCdEmpresa' =>'',
+		'sDsSenha' =>'',
+		'nCdServico' => '41106',
+		'sCepOrigem' => '04429150',
+		'sCepDestino' => '04431000',
+		'nVlPeso' => '10',
+		'nCdFormato' => 1,
+		'nVlComprimento' => 16.0,
+		'nVlAltura' => 15,
+		'nVlLargura' => 15,
+		'nVlDiametro' => 20,
+		'sCdMaoPropria' => 'N',
+		'nVlValorDeclarado' => 0,
+		'sCdAvisoRecebimento' => 'S'
+		);
+		echo "<pre>";
+		
+		$cache = new Cache();
+		$cache->setFolder(APPLICATION_PATH.'cache');
+		
+		$ws = new SoapClient('http://ws.correios.com.br/calculador/CalcPrecoPrazo.asmx?wsdl');
+		$result = $ws->CalcPrecoPrazo($data);
+		$cache->saveCache('correios', $result->CalcPrecoPrazoResult->Servicos->cServico->MsgErro);
+		if($cache->readCache('correios')){
+			echo $cache->readCache('correios');
+		}else{
+			echo $result->CalcPrecoPrazoResult->Servicos->cServico->MsgErro;
+		}
 	}
 
 }
