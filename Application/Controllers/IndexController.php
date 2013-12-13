@@ -22,6 +22,7 @@ class IndexController extends OXE_Controller {
 		$this->view('index/index',$data);
 	}
 	
+	
 	public function boletoAction()
 	{
 		$pag = new Pagination();
@@ -33,6 +34,7 @@ class IndexController extends OXE_Controller {
 		$pag->setLimit($limite);
 		$pag->setParam('pagina');
 		$pag->setTotalRegister($data);
+		
 		
 		$data['listas'] = $teste->list_all($inicio, $limite);
 		$data['pag'] = $pag;
