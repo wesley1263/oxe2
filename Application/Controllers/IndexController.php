@@ -42,7 +42,6 @@ class Index extends OXE_Controller {
 		$langua = new Language();
 		$langua->loadLanguage('en');
 		echo $langua->translator('title');
-		// $this->dump($teste);
 	}
 	
 	public function correiosAction()

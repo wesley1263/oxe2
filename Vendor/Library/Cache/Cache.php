@@ -84,7 +84,6 @@ class Cache {
 	 * */
 	public function saveCache($key,$content,$time = null)
 	{
-		$time = (is_null($time) ? nulll : $time.' minutes');
 		$time = strtotime(!is_null($time) ? $time : self::$_time);
 		$content = serialize(array(
 			'expires'=>$time,
