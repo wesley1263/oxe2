@@ -12,7 +12,7 @@ namespace Vendor\Core;
 class Request {
  	
 	private $_Controller = 'index';
-	private $_Action = 'main';
+	private $_Action = 'index';
 	private $_Param = array();
 	
 	
@@ -29,7 +29,7 @@ class Request {
 		$request = explode('/', $_GET['url']);
 		
 		$this->_Controller = ($c = array_shift($request))? $c : 'index';
-		$this->_Action = ($a = array_shift($request)) ? $a : 'main';
+		$this->_Action = ($a = array_shift($request)) ? $a : 'index';
 		$this->_Param = (isset($request[0])?$request: array());
 	}
 	

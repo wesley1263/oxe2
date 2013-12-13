@@ -14,10 +14,10 @@ class Router {
 	public static function Run(Request $request) {
 
 		$controller = $request -> getController();
-		$action = $request -> getAction();
+		$action = $request -> getAction().'Action';
 		$param = $request -> getParam();
 		### Definindo arquivo do controller ###
-		$file_controller = CONTROLLER_PATH . ucfirst($controller) . '.php';
+		$file_controller = CONTROLLER_PATH . ucfirst($controller) . 'Controller.php';
 		if (file_exists($file_controller)) {
 
 			require ($file_controller);
