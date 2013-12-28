@@ -5,6 +5,7 @@ use Vendor\Library\Pagination\Pagination;
 use Vendor\Library\Language\Language;
 use Vendor\Library\Cache\Cache;
 use Vendor\Library\PHPMailer\PHPMailer;
+use Vendor\Library\Route\Route;
 
 
 class IndexController extends OXE_Controller {
@@ -18,14 +19,15 @@ class IndexController extends OXE_Controller {
 	{
 		$teste = new Teste();
 		$data['title'] = 'Pagina inicial';
-		// echo phpversion();
-		
+		echo substr(__FUNCTION__,0,-6);	
+	
 		$this->view('index/index',$data);
 	}
 	
 	
 	public function boletoAction()
 	{
+		echo substr(__FUNCTION__,0,-6);
 		$pag = new Pagination();
 		$teste = new Teste();
 		$data = $teste->lista_count();
@@ -108,6 +110,11 @@ class IndexController extends OXE_Controller {
 		} else {
 		    echo "Message sent!";
 		}
+	}
+	
+	public function routeAction()
+	{
+		echo 'EU sou route';
 	}
 
 }

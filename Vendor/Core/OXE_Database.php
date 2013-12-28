@@ -120,7 +120,7 @@ abstract class OXE_Database extends PDO {
 				$new_data[] = "$keys = :$keys";
 			}
 			$new_data = implode(',', $new_data);
-			$db = $this->prepare("UDPATE $this->_name SET $new_data WHERE $cond");
+			$db = $this->prepare("UPDATE $this->_name SET $new_data WHERE $cond");
 			foreach($data as $key => $value){
 				$types = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
 				
@@ -136,7 +136,8 @@ abstract class OXE_Database extends PDO {
 	public function delete($id)
 	{
 		try{
-			return $db->exec("DELETE FROM $this->_name WHERE $this->_primary = $id");
+			$db = $this->prepare("DELETE FROM $this->_name WHERE $this->_primary = $id");
+			return $db->execute();
 		}catch(PDOException $e){
 			exit($e->getMessage());
 		}

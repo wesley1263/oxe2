@@ -17,12 +17,13 @@ class Router {
 		$action = $request -> getAction().'Action';
 		$param = $request -> getParam();
 		
-		### Definindo arquivo do controller ###
+		### Define Controller  files ###
 		$file_controller = CONTROLLER_PATH . ucfirst($controller) . '.php';
 		if (file_exists($file_controller)) {
 
 			require ($file_controller);
 			
+		### Define Controller  ###
 			if (class_exists($controller)) {
 				$controller = new $controller();
 			} else {
